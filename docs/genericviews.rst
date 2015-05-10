@@ -1,10 +1,6 @@
 Generic views
 =============
 
-Django's `class-based views <https://docs.djangoproject.com/en/dev/topics/class-based-views/>`_  are used to query data and format it according to `Memento's rules <http://www.mementoweb.org/guide/quick-intro/>`_.
-
-Putting all the pieces together is a little tricky at first, particularly if you haven't studied `the Django source code <https://github.com/django/django/tree/master/django/views/generic>`_ or lack experience `working with Python classes <http://www.diveintopython.net/object_oriented_framework/defining_classes.html>`_ in general. But if you figure it out, we think it's worth the trouble.
-
 MementoDetailView
 -----------------
 

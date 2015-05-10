@@ -3,7 +3,19 @@ django-memento-framework
 
 A set for helpers for Django web sites to enable `the Memento framework <http://www.mementoweb.org/guide/quick-intro/>`_ for time-based access.
 
-Documentation:
+How does it work?
+-----------------
+
+Django's `class-based views <https://docs.djangoproject.com/en/dev/topics/class-based-views/>`_  are used to query data and format it according to `Memento's rules <http://www.mementoweb.org/guide/quick-intro/>`_.
+
+The generic views in this package can be used to quickly:
+
+* Publish a TimeMap that lists all of the archived versions of each URL in your archive
+* Host a TimeGate that handles requests that include a URL and a timestamp, redirecting to the detail page for the nearest archive.
+* Enrich detail pages in the archive to include the extra metadata required by the Memento system
+
+Documentation
+-------------
 
 .. toctree::
    :maxdepth: 3
@@ -11,6 +23,9 @@ Documentation:
    gettingstarted
    genericviews
    changelog
+
+Other resources
+---------------
 
 * Code repository: `github.com/pastpages/django-memento-framework <https://github.com/pastpages/django-memento-framework>`_
 * Issues: `github.com/pastpages/django-memento-framework/issues <https://github.com/pastpages/django-memento-framework/issues>`_
