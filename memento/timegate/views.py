@@ -11,7 +11,7 @@ from django.contrib.sites.models import get_current_site
 from django.views.generic import RedirectView, DetailView
 
 
-class TimeGateDetailView(DetailView):
+class MementoDetailView(DetailView):
     datetime_field = 'datetime'
 
     def get_timemap_url(self, request, url):
