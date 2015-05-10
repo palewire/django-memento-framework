@@ -3,9 +3,7 @@ Generic views
 
 Django's `class-based views <https://docs.djangoproject.com/en/dev/topics/class-based-views/>`_  are used to query data and format it according to `Memento's rules <http://www.mementoweb.org/guide/quick-intro/>`_.
 
-Putting all the pieces together is a little tricky at first, particularly if you haven't studied `the Django source code <https://github.com/django/django/tree/master/django/views/generic>`_ or lack experience `working with Python classes <http://www.diveintopython.net/object_oriented_framework/defining_classes.html>`_ in general.
-
-But if you figure it out, we think it's worth the trouble.
+Putting all the pieces together is a little tricky at first, particularly if you haven't studied `the Django source code <https://github.com/django/django/tree/master/django/views/generic>`_ or lack experience `working with Python classes <http://www.diveintopython.net/object_oriented_framework/defining_classes.html>`_ in general. But if you figure it out, we think it's worth the trouble.
 
 MementoDetailView
 -----------------
@@ -81,8 +79,83 @@ TimemapLinkList
 
 .. py:class:: TimemapLinkList(object)
 
-    Returns a queryset list in Memento's Timemap format.
+    Returns a queryset list in Memento's TimeMap link format. Can be optionally paginated. Designed to emulate `Django's built-in feed framework <https://docs.djangoproject.com/en/1.8/ref/contrib/syndication/>`_.
 
+    .. py:attribute:: paginate_by
+
+        An optional integer attribute that will trigger the pagination of the
+        result set so that each page includes the provided number of objects.
+
+    .. py:method:: get_object(request, url)
+
+        Returns the model object for the provided original URL. Required.
+
+    .. py:method:: get_original_url(obj)
+
+        Returns the original URL that was archived given the model object. Required.
+
+    .. py:method:: memento_list(obj)
+
+        Returns the queryset of archived resources associated with the submitted original URL given its object. Required.
+
+    .. py:method:: memento_datetime(item)
+
+        Returns the timestamp of when an archived resource was retrieved given its object. Required.
+
+    **Example myapp/feeds.py**
+
+    .. code-block:: python
+
+        from memento.timemap import TimemapLinkList
+
+
+        class ExampleTimemapLinkList(TimemapLinkList):
+            """
+            A Memento TimeMap that, given a URL, will return a list of archived objects for that page in the archive in link format.
+
+            It is linked to a url that looks like something like:
+
+                url(
+                    r'^timemap/(?P<url>.*)$',
+                    feeds.ExampleTimemapLinkList.as_view(),
+                    name="timemap-screenshot"
+                ),
+
+            """
+            paginate_by = 1000
+
+            def get_object(self, request, url):
+                return get_object_or_404(Site, url__startswith=url)
+
+            def get_original_url(self, obj):
+                return obj.url
+
+            def memento_list(self, obj):
+                return Screenshot.objects.filter(site=obj)
+
+            def memento_datetime(self, item):
+                return item.timestamp
+
+    **Example response**
+
+    .. code-block:: bash
+
+        $ curl -i http://www.example.com/timemap/http://archivedsite.com/
+        HTTP/1.0 200 OK
+        Server: Apache/2.2.22 (Ubuntu)
+        Content-Type: application/link-format; charset=utf-8
+
+        <http://archivedsite.com/>;rel="original",
+         <http://www.pastpages.org/timemap/link/http://archivedsite.com/>
+           ; rel="self";type="application/link-format",
+         <http://www.example.com/timemap/link/http://archivedsite.com?page=1>
+           ; rel="timemap";type="application/link-format",
+         <http://www.example.com/timemap/link/http://archivedsite.com/?page=2>
+           ; rel="timemap";type="application/link-format",
+         <http://www.example.com/timemap/link/http://archivedsite.com/?page=3>
+           ; rel="timemap";type="application/link-format",
+         <http://www.example.com/timemap/link/http://archivedsite.com/?page=4>
+           ; rel="timemap";type="application/link-format"
 
 TimeGateView
 ------------
