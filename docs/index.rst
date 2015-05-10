@@ -6,13 +6,13 @@ A set for helpers for Django web sites to enable `the Memento framework <http://
 How does it work?
 -----------------
 
-Django's `class-based views <https://docs.djangoproject.com/en/dev/topics/class-based-views/>`_  are used to query data and format it according to `Memento's rules <http://www.mementoweb.org/guide/quick-intro/>`_.
+Django's `class-based views <https://docs.djangoproject.com/en/dev/topics/class-based-views/>`_  are used to retrieve archived data and format it according to `Memento's rules <http://www.mementoweb.org/guide/quick-intro/>`_.
 
 The generic views in this package can be used to quickly:
 
 * Publish a TimeMap that lists all of the archived versions of each URL in your archive
-* Host a TimeGate that handles requests that include a URL and a timestamp, redirecting to the detail page for the nearest archive.
-* Enrich detail pages in the archive to include the extra metadata required by the Memento system
+* Host a TimeGate that handles requests that include a URL and a timestamp, redirecting to the detail view for the nearest archive
+* Enrich detail views in the archive to include the extra metadata required by the Memento system
 
 Documentation
 -------------
