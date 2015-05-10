@@ -117,7 +117,7 @@ TimemapLinkList
 
                 url(
                     r'^timemap/(?P<url>.*)$',
-                    feeds.ExampleTimemapLinkList.as_view(),
+                    feeds.ExampleTimemapLinkList(),
                     name="timemap-screenshot"
                 ),
 
