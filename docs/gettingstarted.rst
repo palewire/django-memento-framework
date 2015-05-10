@@ -136,7 +136,7 @@ This will now return a 302 redirect when given a URL in the request with a heade
 
 .. code-block:: bash
 
-    url -X HEAD -i http://localhost:8000/timegate/http://archivedsite.com/ --header "Accept-Datetime: Fri, 1 May 2015 00:01:00 GMT"
+    $ url -X HEAD -i http://localhost:8000/timegate/http://archivedsite.com/ --header "Accept-Datetime: Fri, 1 May 2015 00:01:00 GMT"
     HTTP/1.1 302 Moved Temporarily
     Server: Apache/2.2.22 (Ubuntu)
     Link: <http://archivedsite.com/>; rel="original", <http://localhost:800/timemap/link/http://archivedsite.com/>; rel="timemap"; type="application/link-format"
