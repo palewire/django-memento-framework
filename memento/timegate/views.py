@@ -12,7 +12,36 @@ from django.views.generic import RedirectView, DetailView
 
 
 class MementoDetailView(DetailView):
+    """
+    Extends Django's DetailView to describe an archived resource.
+
+    A set of extra headers is added to the response. They are:
+
+        * The "Memento-Datetime" when the resource was archived.
+
+        * A "Link" that includes the URL of the original resource as well
+          as the location of the TimeMap the publishes the directory of
+          all versions archived by your site.
+
+        * A "Vary" indicator that this is a Memento enabled site
+
+    The view should be subclassed and configured like any other DetailView
+    with a few extra options. They are:
+
+        * datetime_field: A string attribute that is the name of the database
+          field that contains the timestamp when the resource was archived.
+
+        * timemap_pattern: The name of the URL pattern for this site's TimeMap
+          that, given the original url, is able to reverse to return the
+          location of the map that serves as the directory of all versions of
+          this resource archived by your site.
+
+        * get_original_url: A method that, given the object being rendered
+          by the view, will return the original URL of the archived resource.
+
+    """
     datetime_field = 'datetime'
+    timemap_pattern_name = None
 
     def get_timemap_url(self, request, url):
         path = reverse(self.timemap_pattern_name, kwargs={'url': url})

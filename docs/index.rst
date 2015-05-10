@@ -1,7 +1,7 @@
 django-memento-framework
 ========================
 
-A set for helpers for Django web sites to enable the Memento framework for time-based access
+A set for helpers for Django web sites to enable `the Memento framework <http://www.mementoweb.org/guide/quick-intro/>`_ for time-based access
 
 Contents:
 

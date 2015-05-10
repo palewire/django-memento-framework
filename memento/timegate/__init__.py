@@ -1,7 +1,6 @@
-from views import TimeGateView, TimeGateDetailView, MementoDetailView
+from views import TimeGateView, MementoDetailView
 
 __all__ = (
     "TimeGateView",
-    "TimeGateDetailView",
     "MementoDetailView"
 )
