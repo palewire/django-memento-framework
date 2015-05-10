@@ -44,6 +44,10 @@ class MementoDetailView(DetailView):
     timemap_pattern_name = None
 
     def get_timemap_url(self, request, url):
+        """
+        Returns the location of the TimeMap that lists resources archived
+        for the provided URL.
+        """
         path = reverse(self.timemap_pattern_name, kwargs={'url': url})
         current_site = get_current_site(request)
         return add_domain(
@@ -77,8 +81,9 @@ class MementoDetailView(DetailView):
 
 class TimeGateView(RedirectView):
     """
-    A Memento TimeGate that parses a request from the headers
-    and redirects to the corresponding Memento detail page.
+    Creates a TimeGate that handles a request with Memento headers
+    and returns a response that redirects to the corresponding
+    Memento.
     """
     model = None
     queryset = None
@@ -88,6 +93,10 @@ class TimeGateView(RedirectView):
     datetime_field = 'datetime'
 
     def parse_datetime(self, request):
+        """
+        Parses the requested datetime from the request headers
+        and returns it if it exists. Otherwise returns None.
+        """
         # Verify that the Accept-Datetime header is provided
         if not request.META.get("HTTP_ACCEPT_DATETIME"):
             return None
@@ -102,6 +111,10 @@ class TimeGateView(RedirectView):
         return dt
 
     def get_object(self, url, dt):
+        """
+        Accepts the requested URL and datetime and returns the object
+        with the smallest date difference.
+        """
         queryset = self.get_queryset()
         queryset = queryset.filter(**{self.url_field: url})
 
@@ -131,6 +144,9 @@ class TimeGateView(RedirectView):
                 return next_obj
 
     def get_most_recent_object(self, url):
+        """
+        Returns the most recently archive object of the submitted URL
+        """
         queryset = self.get_queryset()
         try:
             return queryset.filter(**{
@@ -160,6 +176,9 @@ class TimeGateView(RedirectView):
         return self.queryset.all()
 
     def get_redirect_url(self, request, obj):
+        """
+        Returns the URL that will redirect to the Memento resource.
+        """
         current_site = get_current_site(request)
         return add_domain(
             current_site.domain,
@@ -168,6 +187,10 @@ class TimeGateView(RedirectView):
         )
 
     def get_timemap_url(self, request, url):
+        """
+        Returns the location of the TimeMap that lists resources archived
+        for the provided URL.
+        """
         path = reverse(self.timemap_pattern_name, kwargs={'url': url})
         current_site = get_current_site(request)
         return add_domain(

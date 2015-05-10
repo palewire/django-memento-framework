@@ -26,7 +26,7 @@ MementoDetailView
 
     .. py:attribute:: datetime_field
 
-        A string attribute that is the name of the database field that contains the timestamp when the resource was archived. Required.
+        A string attribute that is the name of the database field that contains the timestamp when the resource was archived. Default ``'datetime'``.
 
     .. py:attribute:: timemap_pattern_name
 
@@ -41,6 +41,7 @@ MementoDetailView
     .. code-block:: python
 
         from memento.timegate import MementoDetailView
+
 
         class ExampleMementoDetailView(MementoDetailView):
             """
@@ -82,10 +83,71 @@ TimemapLinkList
 
     Returns a queryset list in Memento's Timemap format.
 
+
 TimeGateView
 ------------
 
 .. py:class:: TimeGateView(RedirectView)
 
-    A Memento TimeGate that parses a request from the headers and redirects to the corresponding Memento detail page.
+    Creates a TimeGate that handles a request with a 'Accept-Datetime' headers and returns a response that redirects to the corresponding Memento.
 
+    .. attribute:: model
+
+        A Django database model where the object will be drawn with a ``Model.objects.filter()`` query. Optional. If you want to provide a more specific list, define the ``queryset`` attribute instead.
+
+    .. attribute:: queryset
+
+        The list of objects that will be provided to the template. Can be any iterable of items, not just a Django queryset. Optional, but if this attribute is not defined the ``model`` attribute must be defined.
+
+    .. py:attribute:: datetime_field
+
+        A string attribute that is the name of the database field that contains the timestamp when the resource was archived. Default ``'datetime'``.
+
+    .. py:attribute:: url_kwarg
+
+        The name for the keyword argument in the URL pattern that will be used to filter the queryset down to objects archived for the resource. Default ``'url'``.
+
+    .. py:attribute:: url_field
+
+        A string attribute that is the name of the database field that contains
+        the original URL archived. Defailt ``'url'``.
+
+    .. py:attribute:: timemap_pattern_name
+
+        The name of the URL pattern for this site's TimeMap that, given the original url, is able to reverse to return the location of the map that serves as the directory of all versions of this resource archived by your site. Optional.
+
+    **Example myapp/views.py**
+
+    .. code-block:: python
+
+        from memento.timegate import TimeGateView
+
+
+        class ExampleTimeGateView(TimeGateView):
+            """
+            A Memento TimeGate that, given a timestamp, will redirect to the detail page for a screenshot in my example archive
+
+            It is linked to a url that looks like something like:
+
+                url(
+                    r'^timegate/(?P<url>.*)$',
+                    views.ExampleTimeGateView.as_view(),
+                    name="timegate"
+                ),
+
+            """
+            model = Screenshot
+            url_field = 'site__url' # You can walk across ForeignKeys like normal
+            datetime_field = 'timestamp'
+            timemap_pattern_name = "timemap-screenshot"
+
+    **Example response**
+
+    .. code-block:: bash
+
+        $ curl -X HEAD -i http://www.example.com/timegate/http://archivedsite.com/ --header "Accept-Datetime: Fri, 1 May 2015 00:01:00 GMT"
+        HTTP/1.1 302 Moved Temporarily
+        Server: Apache/2.2.22 (Ubuntu)
+        Link: <http://archivedsite.com/>; rel="original", <http://www.example.com/timemap/link/http://archivedsite.com/>; rel="timemap"; type="application/link-format"
+        Location: http://www.example.com/screenshot/100/
+        Vary: accept-datetime
