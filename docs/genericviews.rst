@@ -78,6 +78,14 @@ MementoDetailView
 TimemapLinkList
 ---------------
 
+.. py:class:: TimemapLinkList(object)
+
+    Returns a queryset list in Memento's Timemap format.
 
 TimeGateView
 ------------
+
+.. py:class:: TimeGateView(RedirectView)
+
+    A Memento TimeGate that parses a request from the headers and redirects to the corresponding Memento detail page.
+

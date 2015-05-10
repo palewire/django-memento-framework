@@ -11,7 +11,7 @@ from .feedgenerator import TimemapLinkListGenerator, TimemapLinkIndexGenerator
 
 class TimemapLinkList(object):
     """
-    An feed class that returns a list in Memento's Timemap format.
+    A feed class that returns a list in Memento's Timemap format.
     """
     paginator_class = Paginator
     paginate_by = None

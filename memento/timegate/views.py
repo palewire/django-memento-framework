@@ -78,7 +78,7 @@ class MementoDetailView(DetailView):
 class TimeGateView(RedirectView):
     """
     A Memento TimeGate that parses a request from the headers
-    and redirects to the corresponding screenshot detail page.
+    and redirects to the corresponding Memento detail page.
     """
     model = None
     queryset = None
