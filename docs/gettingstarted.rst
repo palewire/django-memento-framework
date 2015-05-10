@@ -57,7 +57,7 @@ We won't go into all the code you'd need for this archive to actually work, but 
 TimeMaps
 --------
 
-A good first step is create a TimeMap that will index all of the archives in your database. This much like the sitemaps created for traditional search engines, but expanded to include datetime metadata.
+A good first step is create a TimeMap that will index all of the archives in your database. This is much like the sitemaps created for traditional search engines, but expanded to include datetime metadata.
 
 This library includes a generic view that will publish a queryset in Memento's link format, that can be optionally paginated. It is designed to emulate `Django's built-in feed framework <https://docs.djangoproject.com/en/1.8/ref/contrib/syndication/>`_ and operates in much the same way.
 
