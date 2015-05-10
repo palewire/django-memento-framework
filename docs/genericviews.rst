@@ -116,7 +116,7 @@ TimemapLinkList
             It is linked to a url that looks like something like:
 
                 url(
-                    r'^timemap/(?P<url>.*)$',
+                    r'^timemap/link/(?P<url>.*)$',
                     feeds.ExampleTimemapLinkList(),
                     name="timemap-screenshot"
                 ),
