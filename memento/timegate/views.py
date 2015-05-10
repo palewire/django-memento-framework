@@ -56,7 +56,7 @@ class MementoDetailView(DetailView):
         raise NotImplementedError("get_original_url method not implemented")
 
     def get(self, request, *args, **kwargs):
-        response = super(TimeGateDetailView, self).get(
+        response = super(MementoDetailView, self).get(
             request,
             *args,
             **kwargs
