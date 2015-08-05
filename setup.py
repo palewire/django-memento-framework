@@ -35,12 +35,12 @@ class TestCommand(Command):
 
 setup(
     name='django-memento-framework',
-    version='0.0.1',
+    version='0.0.3',
     description='A set for helpers for Django web sites to enable the \
 Memento framework for time-based access',
     author='Ben Welsh',
     author_email='ben.welsh@gmail.com',
-    url='http://www.github.com/datadesk/django-memento/',
+    url='http://django-memento-framework.readthedocs.org',
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,  # because we're including static files
