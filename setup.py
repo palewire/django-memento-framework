@@ -35,7 +35,7 @@ class TestCommand(Command):
 
 setup(
     name='django-memento-framework',
-    version='0.0.3',
+    version='0.0.5',
     description='A set for helpers for Django web sites to enable the \
 Memento framework for time-based access',
     author='Ben Welsh',
@@ -47,5 +47,10 @@ Memento framework for time-based access',
     install_requires=(
         'python-dateutil',
     ),
-    cmdclass={'test': TestCommand}
+    license="MIT",
+    cmdclass={'test': TestCommand},
+    classifiers=(
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2.7',
+    ),
 )
