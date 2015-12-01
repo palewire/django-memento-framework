@@ -4,6 +4,7 @@ from django.http import HttpResponse, Http404
 from dateutil.parser import parse as dateparser
 from django.utils.cache import patch_vary_headers
 from django.utils.translation import ugettext as _
+from django.core.exceptions import SuspiciousOperation
 from memento.templatetags.memento_tags import httpdate
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.syndication.views import add_domain
@@ -127,9 +128,8 @@ class TimeGateView(RedirectView):
         except:
             dt = None
         if not dt:
-            return HttpResponse(
+            raise SuspiciousOperation(
                 _("Bad request (400): Accept-Datetime header is malformed"),
-                status=400
             )
         return dt
 
