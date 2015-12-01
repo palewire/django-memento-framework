@@ -124,7 +124,7 @@ class TimeGateView(RedirectView):
         # Verify that the Accept-Datetime header is valid
         try:
             dt = dateparser(request.META.get("HTTP_ACCEPT_DATETIME"))
-        except ValueError:
+        except:
             dt = None
         if not dt:
             return HttpResponse(
