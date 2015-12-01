@@ -23,8 +23,6 @@ class MementoDetailView(DetailView):
           as the location of the TimeMap the publishes the directory of
           all versions archived by your site.
 
-        * A "Vary" indicator that this is a Memento enabled site
-
     The view should be subclassed and configured like any other DetailView
     with a few extra options. They are:
 
@@ -67,7 +65,6 @@ class MementoDetailView(DetailView):
         )
         dt = getattr(self.object, self.datetime_field)
         response['Memento-Datetime'] = httpdate(dt)
-        patch_vary_headers(response, ["accept-datetime"])
         if self.timemap_pattern_name:
             original_url = self.get_original_url(self.object)
             timemap_url = self.get_timemap_url(self.request, original_url)
