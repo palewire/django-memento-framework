@@ -85,7 +85,7 @@ class MementoDetailView(DetailView):
             timemap_url = self.get_timemap_url(self.request, original_url)
             timegate_url = self.get_timegate_url(self.request, original_url)
             response['Link'] = """<%(original_url)s>; rel="original", \
-<%(timemap_url)s>; rel="timemap"; type="application/link-format" \
+<%(timemap_url)s>; rel="timemap"; type="application/link-format", \
 <%(timegate_url)s>; rel="timegate\"""" % dict(
                 original_url=urllib.unquote(original_url),
                 timemap_url=urllib.unquote(timemap_url),
