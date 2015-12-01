@@ -157,6 +157,7 @@ The detail page for each snapshot in the archive should also be enriched to incl
         model = ArchivedHTML
         datetime_field = 'timestamp'
         timemap_pattern_name = "timemap-archivedhtml"
+        timegate_pattern_name = "timegate"
 
         def get_original_url(self, obj):
             return obj.page.url

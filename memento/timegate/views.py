@@ -35,6 +35,11 @@ class MementoDetailView(DetailView):
           location of the map that serves as the directory of all versions of
           this resource archived by your site.
 
+        * timegate_pattern: The name of the URL pattern for this site's TimeGate
+          that, given the original url, is able to reverse to return the
+          location of the url where a datetime can be submitted to find
+          the closest mementos for this resource. 
+
         * get_original_url: A method that, given the object being rendered
           by the view, will return the original URL of the archived resource.
 

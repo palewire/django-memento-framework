@@ -14,9 +14,8 @@ MementoDetailView
 
         * A ``Link`` that includes the URL of the original resource as well
           as the location of the TimeMap the publishes the directory of
-          all versions archived by your site.
-
-        * A ``Vary`` indicator that this is a Memento enabled site
+          all versions archived by your site and a TimeGate where a datetime
+          can be submitted to find the closest mementos for this resource.
 
     .. py:attribute:: datetime_field
 
@@ -25,6 +24,10 @@ MementoDetailView
     .. py:attribute:: timemap_pattern_name
 
         The name of the URL pattern for this site's TimeMap that, given the original url, is able to reverse to return the location of the map that serves as the directory of all versions of this resource archived by your site. Optional.
+
+    .. py:attribute:: timegate_pattern_name
+
+        The name of the URL pattern for this site's TimeGate that, given the original url, is able to reverse to return the location of the url where a datetime can be submitted to find the closest mementos for this resource. Optional.
 
     .. py:method:: get_original_url()
 
@@ -54,6 +57,7 @@ MementoDetailView
             model = Screenshot
             datetime_field = 'timestamp'
             timemap_pattern_name = "timemap-screenshot"
+            timegate_pattern_name = "timegate-screenshot"
 
             def get_original_url(self, obj):
                 return obj.site.url
@@ -65,9 +69,8 @@ MementoDetailView
         $ curl -X HEAD -i http://www.example.com/screenshot/100/
         HTTP/1.1 200 OK
         Server: Apache/2.2.22 (Ubuntu)
-        Link: <http://archivedsite.com/>; rel="original", <http://www.example.com/timemap/link/http://archivedsite.com/>; rel="timemap"; type="application/link-format"
+        Link: <http://archivedsite.com/>; rel="original", <http://www.example.com/timemap/link/http://archivedsite.com/>; rel="timemap"; type="application/link-format", <http://www.example.com/timegate/http://archivedsite.com/>; rel="timegate"
         Memento-Datetime: Fri, 1 May 2015 00:00:01 GMT
-        Vary: accept-datetime
 
 
 TimemapLinkList
