@@ -38,7 +38,7 @@ class MementoDetailView(DetailView):
         * timegate_pattern: The name of the URL pattern for this site's TimeGate
           that, given the original url, is able to reverse to return the
           location of the url where a datetime can be submitted to find
-          the closest mementos for this resource. 
+          the closest mementos for this resource.
 
         * get_original_url: A method that, given the object being rendered
           by the view, will return the original URL of the archived resource.
@@ -122,7 +122,10 @@ class TimeGateView(RedirectView):
             return None
 
         # Verify that the Accept-Datetime header is valid
-        dt = dateparser(request.META.get("HTTP_ACCEPT_DATETIME"))
+        try:
+            dt = dateparser(request.META.get("HTTP_ACCEPT_DATETIME"))
+        except ValueError:
+            dt = None
         if not dt:
             return HttpResponse(
                 _("Bad request (400): Accept-Datetime header is malformed"),
