@@ -56,7 +56,7 @@ class MementoDetailView(DetailView):
             request.is_secure(),
         )
 
-    def get_timemap_url(self, request, url):
+    def get_timegate_url(self, request, url):
         """
         Returns the location of the TimeGate where a datetime
         can be submitted to find the closest mementos for this resource.
