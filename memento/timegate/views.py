@@ -21,7 +21,8 @@ class MementoDetailView(DetailView):
 
         * A "Link" that includes the URL of the original resource as well
           as the location of the TimeMap the publishes the directory of
-          all versions archived by your site.
+          all versions archived by your site and a TimeGate where a datetime
+          can be submitted to find the closest mementos for this resource.
 
     The view should be subclassed and configured like any other DetailView
     with a few extra options. They are:
@@ -40,6 +41,7 @@ class MementoDetailView(DetailView):
     """
     datetime_field = 'datetime'
     timemap_pattern_name = None
+    timegate_pattern_name = None
 
     def get_timemap_url(self, request, url):
         """
@@ -47,6 +49,19 @@ class MementoDetailView(DetailView):
         for the provided URL.
         """
         path = reverse(self.timemap_pattern_name, kwargs={'url': url})
+        current_site = get_current_site(request)
+        return add_domain(
+            current_site.domain,
+            path,
+            request.is_secure(),
+        )
+
+    def get_timemap_url(self, request, url):
+        """
+        Returns the location of the TimeGate where a datetime
+        can be submitted to find the closest mementos for this resource.
+        """
+        path = reverse(self.timegate_pattern_name, kwargs={'url': url})
         current_site = get_current_site(request)
         return add_domain(
             current_site.domain,
@@ -68,10 +83,13 @@ class MementoDetailView(DetailView):
         if self.timemap_pattern_name:
             original_url = self.get_original_url(self.object)
             timemap_url = self.get_timemap_url(self.request, original_url)
+            timegate_url = self.get_timegate_url(self.request, original_url)
             response['Link'] = """<%(original_url)s>; rel="original", \
-<%(timemap_url)s>; rel="timemap"; type="application/link-format\"""" % dict(
+<%(timemap_url)s>; rel="timemap"; type="application/link-format" \
+<%(timegate_url)s>; rel="timegate\"""" % dict(
                 original_url=urllib.unquote(original_url),
-                timemap_url=urllib.unquote(timemap_url)
+                timemap_url=urllib.unquote(timemap_url),
+                timegate_url=urllib.unquote(timegate_url),
             )
         return response
 
