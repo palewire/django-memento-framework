@@ -2,9 +2,9 @@ from django.utils import six
 from django.templatetags.tz import utc
 from django.utils.timezone import is_naive
 from django.http import Http404, HttpResponse
-from django.contrib.sites.models import get_current_site
 from django.core.paginator import InvalidPage, Paginator
 from django.contrib.syndication.views import add_domain
+from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ImproperlyConfigured, ObjectDoesNotExist
 from .feedgenerator import TimemapLinkListGenerator, TimemapLinkIndexGenerator
 
