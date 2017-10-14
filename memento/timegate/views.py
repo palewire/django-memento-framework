@@ -8,8 +8,8 @@ from django.core.exceptions import SuspiciousOperation
 from memento.templatetags.memento_tags import httpdate
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.syndication.views import add_domain
-from django.contrib.sites.models import get_current_site
 from django.views.generic import RedirectView, DetailView
+from django.contrib.sites.shortcuts import get_current_site
 
 
 class MementoDetailView(DetailView):
